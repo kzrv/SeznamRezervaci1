@@ -86,23 +86,14 @@ public class SeznamRezervaci {
      * pozice v povoleném rozsahu.
      */
     public Rezervace dej(final int pozice) throws IndexOutOfBoundsException, IllegalAccessError {
-        if (pozice==0 ){
-            if (pocet>0){
-                System.out.println("Výjimka dodá tento text:Parametr pozice je mimo povoleny rozsah.");
-                throw new IndexOutOfBoundsException();
-            }
-            else {System.out.println("Nepovolena operace, protoze seznam prazdny");
-            throw new IllegalAccessError(); }
+        if(pocet==0){
+            throw new IllegalAccessError("Nepovolena operace, protoze seznam prazdny");
         }
-        else if (seznam[pozice-1]==null){
-            System.out.println("Nepovolena operace, protoze seznam prazdny");
-            throw new IllegalAccessError();
+        if(kontrolaIndexu(pozice-1)){
+            throw new IndexOutOfBoundsException("Parametr pozice je mimo povoleny rozsah.");
         }
-        else if (pozice-1<0 || pozice-1>seznam.length){
-            System.out.println("Výjimka dodá tento text:Parametr pozice je mimo povoleny rozsah.");
-            throw new IndexOutOfBoundsException();
-        }
-        else return seznam[pozice-1];
+
+        return seznam[pozice-1];
     }
 
     /**
@@ -111,7 +102,7 @@ public class SeznamRezervaci {
      *
      * Metoda mění aktuální počet rezervací.
      *
-     * @param <error>
+     * @param //<error>
      * @param pozice v parametru je hodnota pozice prvku v seznamu, první prvek
      * pole je adresován číslem 1.
      *
@@ -129,9 +120,15 @@ public class SeznamRezervaci {
      *
      * XXX Poznámka k implementaci: Platí to samé jako u metody dej.
      */
-    public Rezervace odeber(final int pozice)
-            throws IndexOutOfBoundsException, IllegalAccessError {
-        return null;
+    public Rezervace odeber(final int pozice)  throws IndexOutOfBoundsException, IllegalAccessError {
+        if(pocet==0){
+            throw new IllegalAccessError("Nepovolena operace, protoze seznam prazdny");
+        }
+        if(kontrolaIndexu(pozice-1)){
+            throw new IndexOutOfBoundsException("Parametr pozice je mimo povoleny rozsah.");
+        }
+        pocet-=1;
+        return seznam[pozice-1];
     }
 
     /**
@@ -148,7 +145,11 @@ public class SeznamRezervaci {
      * Metoda zruší všechny položky v seznamu.
      */
     public void zrus() {
-        
+        for(int i=0;i<seznam.length;i++){
+            seznam[i]=null;
+
+        }
+        pocet=0;
     }
 
 
@@ -159,7 +160,7 @@ public class SeznamRezervaci {
     private void rozsireniSeznamu() {
         Rezervace[] seznam1 = new Rezervace[seznam.length+1];
         for (int i=0; i< seznam.length; i++){
-            seznam1[i+1]=seznam[i];
+            seznam1[i]=seznam[i];
         }
         seznam=seznam1;
     }
@@ -176,7 +177,7 @@ public class SeznamRezervaci {
      * @param index
      */
     private void posunSeznam(int index) {
-        
+
     }
 
     /**
@@ -188,7 +189,8 @@ public class SeznamRezervaci {
      * části seznamu na poli, jinak vrací false
      */
     private boolean kontrolaIndexu(int index) {
-        return false;
+        if (index>seznam.length-1 || index<0) return true;
+        else return false;
     }
 
 }
