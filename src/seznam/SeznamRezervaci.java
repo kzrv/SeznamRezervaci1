@@ -86,14 +86,23 @@ public class SeznamRezervaci {
      * pozice v povoleném rozsahu.
      */
     public Rezervace dej(final int pozice) throws IndexOutOfBoundsException, IllegalAccessError {
-        if (pozice> seznam.length || pozice< seznam.length || (pozice >=seznam.length && pocet!=pozice)){
+        if (pozice==0 ){
+            if (pocet>0){
+                System.out.println("Výjimka dodá tento text:Parametr pozice je mimo povoleny rozsah.");
+                throw new IndexOutOfBoundsException();
+            }
+            else {System.out.println("Nepovolena operace, protoze seznam prazdny");
+            throw new IllegalAccessError(); }
+        }
+        else if (seznam[pozice-1]==null){
+            System.out.println("Nepovolena operace, protoze seznam prazdny");
             throw new IllegalAccessError();
         }
-//       if (seznam[pozice - 1]==null){
-//           throw new IllegalAccessError();
-//       }
-
-       else return seznam[pozice];
+        else if (pozice-1<0 || pozice-1>seznam.length){
+            System.out.println("Výjimka dodá tento text:Parametr pozice je mimo povoleny rozsah.");
+            throw new IndexOutOfBoundsException();
+        }
+        else return seznam[pozice-1];
     }
 
     /**
