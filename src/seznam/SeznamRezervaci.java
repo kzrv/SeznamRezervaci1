@@ -145,11 +145,7 @@ public class SeznamRezervaci {
      * Metoda zruší všechny položky v seznamu.
      */
     public void zrus() {
-        for(int i=0;i<seznam.length;i++){
-            seznam[i]=null;
-
-        }
-        pocet=0;
+        seznam=null;
     }
 
 
@@ -158,7 +154,7 @@ public class SeznamRezervaci {
      * Metoda provede rozšíření velikosti pole na dvojnásobek původní délky
      */
     private void rozsireniSeznamu() {
-        Rezervace[] seznam1 = new Rezervace[seznam.length+1];
+        Rezervace[] seznam1 = new Rezervace[seznam.length*2];
         for (int i=0; i< seznam.length; i++){
             seznam1[i]=seznam[i];
         }
